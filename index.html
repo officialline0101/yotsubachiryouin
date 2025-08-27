@@ -310,11 +310,25 @@
 
         .week-button {
             padding: 10px 20px;
-            background-color: #444444;
-            color: #fff;
-            border: none;
+            background-color: #ffffff;
+            color: #222222;
+            border: 1px solid black;
+            /* ← 外枠を黒1pxに設定 */
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            transform-origin: center center;
+        }
+
+        .week-button:hover {
+            background-color: #ffffff;
+            transform: scale(1.15);
+            /* ドーン！ってくらい拡大🔥 */
+        }
+
+        .week-button:active {
+            transform: scale(0.95);
+            /* クリックした瞬間にギュッと縮む💥 */
         }
 
         .month-button-container {
@@ -327,11 +341,25 @@
 
         .month-button {
             padding: 10px 20px;
-            background-color: #444;
-            color: #fff;
-            border: none;
+            background-color: #ffffff;
+            color: #222222;
+            border: 1px solid black;
+            /* ← 外枠を黒1pxに設定 */
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            transform-origin: center center;
+        }
+
+        .month-button:hover {
+            background-color: #ffffff;
+            transform: scale(1.15);
+            /* ドーン！ってくらい拡大🔥 */
+        }
+
+        .month-button:active {
+            transform: scale(0.95);
+            /* クリックした瞬間にギュッと縮む💥 */
         }
 
         .current-month {
