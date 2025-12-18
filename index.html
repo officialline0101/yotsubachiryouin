@@ -762,13 +762,13 @@
         <div class="label" id="course">メニューをお選びください<span class="required">必須</span></div>
         <div class="info-text">※メニューを選択すると空き状況のカレンダーが表示されます<br>※ブレインセラピーは日曜日限定です。</div>
         <div class="symptoms">
-            <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="15000">整体日本一コース</button>
             <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="15000">スタンダードメニュー</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="15000">ブレインセラピー（日曜日限定）</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="0">ブレインセラピー（日曜日限定）</button>
             <button type="button" onclick="selectSymptom(this, 'treatment3')" data-price="15000">ラフォスストレッチ（20分）</button>
             <button type="button" onclick="selectSymptom(this, 'treatment5')" data-price="15000">ラフォスストレッチ（60分）</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment6')" data-price="15000">筋膜リリース&EMS（20分）</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment7')" data-price="15000">筋膜リリース&EMS（30分）</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment6')" data-price="0">筋膜リリース&EMS（20分）</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment7')" data-price="0">インソール作成（30分〜40分）</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="0">インソール作成のみ（30分〜40分）</button>
         </div>
         <div class="highlight-background">
             <span class="highlight-text">オプション</span>
@@ -873,6 +873,8 @@
 
         let menuTimes = {
             '整体日本一コース': 20,
+            'インソール作成（30分〜40分）': 30,
+            'インソール作成のみ（30分〜40分）': 40,
             'スタンダードメニュー': 40,
             'ブレインセラピー（日曜日限定）': 40,
             'ラフォスストレッチ（20分）': 20,
@@ -1353,16 +1355,16 @@
                         continue;
                     }
 
-// 13:10 から 14:00 までの予約を不可にする
-if ((slotEnd.getHours() === 12 && slotEnd.getMinutes() >= 46) || (slotEnd.getHours() === 14 && slotEnd.getMinutes() === 59)) {
-    cell.textContent = '✕';
-    cell.classList.add('unavailable');
-    continue;
-} else if (slotEnd.getHours() > 12 && slotEnd.getHours() < 15) {
-    cell.textContent = '✕';
-    cell.classList.add('unavailable');
-    continue;
-}
+                    // 13:10 から 14:00 までの予約を不可にする
+                    if ((slotEnd.getHours() === 12 && slotEnd.getMinutes() >= 46) || (slotEnd.getHours() === 14 && slotEnd.getMinutes() === 59)) {
+                        cell.textContent = '✕';
+                        cell.classList.add('unavailable');
+                        continue;
+                    } else if (slotEnd.getHours() > 12 && slotEnd.getHours() < 15) {
+                        cell.textContent = '✕';
+                        cell.classList.add('unavailable');
+                        continue;
+                    }
 
                     // ここで終了時間を使った条件処理を行う
                     // 例えば、リアルタイムで既に過ぎた時間帯は×にする
@@ -1407,15 +1409,15 @@ if ((slotEnd.getHours() === 12 && slotEnd.getMinutes() >= 46) || (slotEnd.getHou
                         cell.textContent = '✕';
                         cell.classList.add('unavailable');
                     }
-// 毎日12:45～14:59は✕にする
-if (
-  (slotStart.getHours() === 12 && slotStart.getMinutes() >= 45) ||
-  (slotStart.getHours() === 13) ||
-  (slotStart.getHours() === 14 && slotStart.getMinutes() <= 59)
-) {
-  cell.textContent = '✕';
-  cell.classList.add('unavailable');
-}
+                    // 毎日12:45～14:59は✕にする
+                    if (
+                        (slotStart.getHours() === 12 && slotStart.getMinutes() >= 45) ||
+                        (slotStart.getHours() === 13) ||
+                        (slotStart.getHours() === 14 && slotStart.getMinutes() <= 59)
+                    ) {
+                        cell.textContent = '✕';
+                        cell.classList.add('unavailable');
+                    }
                     // 日曜日で、営業日ではない場合
                     else if (slotStart.getDay() === 1 && !isBusinessDay && businessEventTimes.length === 0) {
                         cell.textContent = '✕';
