@@ -1370,8 +1370,9 @@
                     }
 
                     // ここで終了時間を使った条件処理を行う
-                    // 例えば、リアルタイムで既に過ぎた時間帯は×にする
-                    if (slotStart < now) {
+                    // リアルタイム+30分以内の時間帯も×にする
+                    const nowPlus30 = new Date(now.getTime() + 30 * 60 * 1000);
+                    if (slotStart < nowPlus30) {
                         cell.textContent = '✕';
                         cell.classList.add('unavailable');
                         continue;
