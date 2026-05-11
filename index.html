@@ -730,6 +730,20 @@
             padding: 50px 10px;
             margin-top: 30px;
         }
+
+        /* ⭐️当院一押しメニュー⭐️ 専用スタイル（控えめ版） */
+        .btn-featured {
+            background-color: #fff8e1 !important;
+            color: #7a4f00 !important;
+            font-weight: bold !important;
+            border: 2px solid #f5a623 !important;
+            border-left: 5px solid #f5a623 !important;
+            border-radius: 8px !important;
+        }
+
+        .btn-featured:hover {
+            background-color: #ffeab0 !important;
+        }
     </style>
 </head>
 
@@ -764,12 +778,12 @@
         <div class="symptoms">
             <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="15000">スタンダードメニュー</button>
             <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="0">ブレインセラピー＋運動療法（30分）</button>
+            <button type="button" class="btn-featured" onclick="selectSymptom(this, 'treatment1')" data-price="0" data-send="一撃必殺治療（60分）">⭐️ 当院一押しメニュー ⭐️<br>一撃必殺治療（60分）</button>
             <button type="button" onclick="selectSymptom(this, 'treatment3')" data-price="15000">ラフォスストレッチ（20分）</button>
             <button type="button" onclick="selectSymptom(this, 'treatment5')" data-price="15000">ラフォスストレッチ（60分）</button>
             <button type="button" onclick="selectSymptom(this, 'treatment6')" data-price="0">筋膜リリース&EMS（20分）</button>
             <button type="button" onclick="selectSymptom(this, 'treatment7')" data-price="0">インソール作成（30分〜40分）</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="0">インソール作成のみ（30分〜40分）</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="0">一撃必殺治療（60分）</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment8_amc')" data-price="4000">AMCマッサージ大会トリートメント体験希望</button>
         </div>
         <div class="highlight-background">
             <span class="highlight-text">オプション</span>
@@ -884,7 +898,8 @@
             'ラフォスストレッチ（40分）': 40,
             'ラフォスストレッチ（60分）': 60,
             '筋膜リリース&EMS（20分）': 20,
-            '筋膜リリース&EMS（30分）': 30
+            '筋膜リリース&EMS（30分）': 30,
+            'AMCマッサージ大会トリートメント体験希望': 30
         };
 
 
@@ -1044,7 +1059,8 @@
                 }
 
                 // 選択されたメニューの時間を取得して保存
-                const selectedMenu = button.textContent;
+                // data-send属性があればそちらを送信用メニュー名として使用（表示名と送信名を分ける）
+                const selectedMenu = button.getAttribute('data-send') || button.textContent;
                 selectedMenuTime = menuTimes[selectedMenu] || 0; // メニュー時間を取得して保存
                 selectedSymptom = [selectedMenu]; // 選択されたメニュー名を配列として保存
                 menuPrice = parseInt(button.getAttribute('data-price'), 10) || 0;  // メニューの価格を取得
@@ -1056,9 +1072,15 @@
             fetchAvailability(currentDate);
 
             if (treatmentId === 'treatment1') {
-                treatmentText.innerHTML = `<div style="text-align: left;"><strong>所要時間：40分</strong></div>`;
+                // 一撃必殺治療（60分）とスタンダードメニューは共にtreatment1を使用
+                const sendName = button.getAttribute('data-send');
+                if (sendName === '一撃必殺治療（60分）') {
+                    treatmentText.innerHTML = `<div style="text-align: left;"><strong>所要時間：60分</strong></div>`;
+                } else {
+                    treatmentText.innerHTML = `<div style="text-align: left;"><strong>所要時間：40分</strong></div>`;
+                }
             } else if (treatmentId === 'treatment2') {
-                treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：40分</strong</div>`;
+                treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：40分</strong></div>`;
             } else if (treatmentId === 'treatment3') {
                 treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：20分</strong></div>`;
             } else if (treatmentId === 'treatment4') {
@@ -1071,6 +1093,8 @@
                 treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：29分</strong></div>`;
             } else if (treatmentId === 'treatment8') {
                 treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：15分</strong></div>`;
+            } else if (treatmentId === 'treatment8_amc') {
+                treatmentText.innerHTML = `<div style="text-align: left;"><strong>所要時間：30分 ／ 料金：4,000円（税込）</strong></div>`;
             } else {
                 treatmentText.innerHTML = '';
             }
@@ -1082,7 +1106,8 @@
             treatmentText.style.display = 'block';
 
             // 選択されたメニューの名前と価格を取得
-            const symptomName = button.textContent;  // ボタンのテキストを取得
+            // data-send属性があればそちらを送信用メニュー名として使用（表示名と送信名を分ける）
+            const symptomName = button.getAttribute('data-send') || button.textContent;  // ボタンのテキスト（送信用）を取得
             selectedSymptom = [symptomName];  // 選択されたメニュー名を配列として保存
             menuPrice = parseInt(button.getAttribute('data-price'), 10) || 0;  // メニューの価格を取得
 
