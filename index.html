@@ -782,6 +782,8 @@
             <button type="button" onclick="selectSymptom(this, 'treatment3')" data-price="15000">ラフォスストレッチ（20分）</button>
             <button type="button" onclick="selectSymptom(this, 'treatment5')" data-price="15000">ラフォスストレッチ（2人用）</button>
             <button type="button" onclick="selectSymptom(this, 'treatment7')" data-price="0">インソール作成（30分〜40分）</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment9')" data-price="0">自律神経スタンダード（30分）</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment12')" data-price="0">自律神経スペシャル（60分）</button>
         </div>
         <div class="highlight-background">
             <span class="highlight-text">オプション</span>
@@ -895,6 +897,8 @@
             'ラフォスストレッチ（20分）': 20,
             'ラフォスストレッチ（40分）': 40,
             'ラフォスストレッチ（2人用）': 60,
+            '自律神経スタンダード（30分）': 30,
+            '自律神経スペシャル（60分）': 60,
             'AMCマッサージ大会トリートメント体験希望': 30
         };
 
@@ -1089,6 +1093,10 @@
                 treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：29分</strong></div>`;
             } else if (treatmentId === 'treatment8') {
                 treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：15分</strong></div>`;
+            } else if (treatmentId === 'treatment9') {
+                treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：30分</strong></div>`;
+            } else if (treatmentId === 'treatment12') {
+                treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：60分</strong></div>`;
             } else if (treatmentId === 'treatment8_amc') {
                 treatmentText.innerHTML = `<div style="text-align: left;"><strong>所要時間：30分 ／ 料金：4,000円（税込）</strong></div>`;
             } else {
