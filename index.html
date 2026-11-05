@@ -776,14 +776,14 @@
         <div class="label" id="course">メニューをお選びください<span class="required">必須</span></div>
         <div class="info-text">※メニューを選択すると空き状況のカレンダーが表示されます</div>
         <div class="symptoms">
-            <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="15000">スタンダードメニュー</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="0">ブレインセラピー＋運動療法（30分）</button>
-            <button type="button" class="btn-featured" onclick="selectSymptom(this, 'treatment1')" data-price="0" data-send="一撃必殺治療（60分）">⭐️ 当院一押しメニュー ⭐️<br>一撃必殺治療（60分）</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment9')" data-price="0">自律神経スタンダード（30分）</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment12')" data-price="0">自律神経スペシャル（60分）</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment3')" data-price="15000">ラフォスストレッチ（20分）</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="4000" data-send="スタンダードメニュー">スタンダードメニュー　4000円</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="5000" data-send="ブレインセラピー＋運動療法（30分）">ブレインセラピー　5000円</button>
+            <button type="button" class="btn-featured" onclick="selectSymptom(this, 'treatment1')" data-price="10000" data-send="一撃必殺治療（60分）">⭐️ 当院一押しメニュー ⭐️<br>一撃必殺治療　10000円</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment9')" data-price="5000" data-send="自律神経スタンダード（30分）">自律神経スタンダード　5000円</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment12')" data-price="9500" data-send="自律神経スペシャル（60分）">自律神経スペシャル　9500円</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment3')" data-price="3000" data-send="ラフォスストレッチ（20分）">ラフォスストレッチ　3000円</button>
             <button type="button" onclick="selectSymptom(this, 'treatment5')" data-price="15000">ラフォスストレッチ（2人用）</button>
-            <button type="button" onclick="selectSymptom(this, 'treatment7')" data-price="0">インソール作成（30分〜40分）</button>
+            <button type="button" onclick="selectSymptom(this, 'treatment7')" data-price="7000" data-send="インソール作成（30分〜40分）">インソール作成　7000円</button>
         </div>
         <div class="highlight-background">
             <span class="highlight-text">オプション</span>
@@ -791,6 +791,7 @@
         <div class="irradiations">
             <button type="button" id="firstirradiations" onclick="selectirradiations(this)" data-price="1500">酸素カプセル（30分）</button>
             <button type="button" id="repeatirradiations" onclick="selectirradiations(this)" data-price="150">酸素カプセル（60分）</button>
+            <button type="button" id="toubanyokuirradiations" onclick="selectirradiations(this)" data-price="0">陶板浴</button>
         </div>
 
         <div class="label">希望日時<span class="required">必須</span></div>
@@ -881,7 +882,8 @@
         // 訪問回数ごとの時間設定 (例：初めて=20分、2回目以降=15分)
         let irradiationsTimes = {
             '酸素カプセル（30分）': 30,
-            '酸素カプセル（60分）': 60
+            '酸素カプセル（60分）': 60,
+            '陶板浴': 0
         };
 
         let selectedirradiationsTime = 0; // 訪問回数で選択された時間
