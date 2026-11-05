@@ -776,7 +776,7 @@
         <div class="label" id="course">メニューをお選びください<span class="required">必須</span></div>
         <div class="info-text">※メニューを選択すると空き状況のカレンダーが表示されます</div>
         <div class="symptoms">
-            <button type="button" onclick="selectSymptom(this, 'treatment1')" data-price="4500" data-send="スタンダードメニュー">スタンダードメニュー　4500円</button>
+            <button type="button" id="standardMenuBtn" onclick="selectSymptom(this, 'treatment1')" data-price="4500" data-send="スタンダードメニュー">スタンダードメニュー　4500円</button>
             <button type="button" onclick="selectSymptom(this, 'treatment2')" data-price="5000" data-send="ブレインセラピー＋運動療法（30分）">ブレインセラピー　5000円</button>
             <button type="button" class="btn-featured" onclick="selectSymptom(this, 'treatment1')" data-price="10000" data-send="一撃必殺治療（60分）">⭐️ 当院一押しメニュー ⭐️<br>一撃必殺治療　10000円</button>
             <button type="button" onclick="selectSymptom(this, 'treatment9')" data-price="5000" data-send="自律神経スタンダード（30分）">自律神経スタンダード　5000円</button>
@@ -857,6 +857,7 @@
         let irradiationsCount = ''; <!-- 選択された症状を格納する変数 -->
         let totalAmount = 0; // 合計金額を格納する変数
         let menuPrice = 0; // メニューの価格
+        const treatmentText = document.getElementById('treatment-text'); // メニュー詳細（所要時間など）の表示欄
         let optionsPrice = 0; // オプションの合計価格
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -1079,7 +1080,9 @@
                 if (sendName === '一撃必殺治療（60分）') {
                     treatmentText.innerHTML = `<div style="text-align: left;"><strong>所要時間：60分</strong></div>`;
                 } else {
-                    treatmentText.innerHTML = `<div style="text-align: left;"><strong>所要時間：40分</strong></div>`;
+                    // スタンダードメニュー：来店回数が未選択のときだけ初診料の案内を表示
+                    const firstVisitNote = visitCount ? '' : `<div style="text-align: left; color: #d32f2f; font-weight: bold; margin-top: 4px;">※初診の方は5000円です</div>`;
+                    treatmentText.innerHTML = `<div style="text-align: left;"><strong>所要時間：40分</strong></div>${firstVisitNote}`;
                 }
             } else if (treatmentId === 'treatment2') {
                 treatmentText.innerHTML = `<div style="text-align: left;"><strong>施術時間：40分</strong></div>`;
@@ -1178,8 +1181,27 @@
 
             console.log('選択された訪問回数の時間:', selectedVisitTime);
 
+            // スタンダードメニューの料金表示を来店回数に合わせて切り替える
+            updateStandardMenuPrice();
+
             // カレンダーを更新するために取得する日付を渡す
             fetchAvailability(currentDate);
+        }
+
+        // スタンダードメニュー：1回目は5000円、2回目以降は4500円
+        function updateStandardMenuPrice() {
+            const btn = document.getElementById('standardMenuBtn');
+            if (!btn) return;
+            const price = (visitCount === '1回目') ? 5000 : 4500;
+            btn.setAttribute('data-price', price);
+            btn.textContent = `スタンダードメニュー　${price}円`;
+
+            // スタンダードメニューが選択中なら、料金・案内文・合計金額を更新
+            if (btn.classList.contains('active')) {
+                menuPrice = price;
+                treatmentText.innerHTML = `<div style="text-align: left;"><strong>所要時間：40分</strong></div>`;
+                updateDisplayInfo();
+            }
         }
 
         function selectDate(cell) {
